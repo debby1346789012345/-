@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜數字遊戲</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #0066cc;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        let targetNumber;
+        let minRange = 1;
+        let maxRange = 500;
+
+        function startGame() {
+            targetNumber = Math.floor(Math.random() * 500) + 1;
+            minRange = 1;
+            maxRange = 500;
+            document.getElementById('message').textContent = "歡迎來到猜數字遊戲！";
+            document.getElementById('guessInput').value = '';
+        }
+
+        function makeGuess() {
+            const userGuess = parseInt(document.getElementById('guessInput').value);
+
+            if (isNaN(userGuess) || userGuess < minRange || userGuess > maxRange) {
+                alert(`請輸入 ${minRange} 到 ${maxRange} 之間的數字。`);
+                return;
+            }
+
+            if (userGuess < targetNumber) {
+                minRange = userGuess ;
+                document.getElementById('message').textContent = `猜錯了！範圍是 ${minRange} 到 ${maxRange}。`;
+            } else if (userGuess > targetNumber) {
+                maxRange = userGuess ;
+                document.getElementById('message').textContent = `猜錯了！範圍是 ${minRange} 到 ${maxRange}。`;
+            } else {
+                document.getElementById('message').textContent = "恭喜你猜中了！";
+            }
+
+            document.getElementById('guessInput').value = '';
+        }
+    </script>
+</head>
+<body>
+    <h1>猜數字遊戲</h1>
+    <p id="message">請點擊下面的按鈕開始遊戲。</p>
+    <input type="number" id="guessInput" placeholder="輸入你的猜測" />
+    <br>
+    <button onclick="makeGuess()">猜</button>
+    <button onclick="startGame()">開始遊戲</button>
+</body>
+</html>
+
